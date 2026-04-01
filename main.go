@@ -256,6 +256,9 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		jsonResponse(w, http.StatusOK, map[string]string{"message": fmt.Sprintf("Bienvenue sur %s (version %s)", appName, appVersion)})
+	})
 	mux.HandleFunc("GET /health", healthHandler(store))
 	mux.HandleFunc("GET /items", getItemsHandler(store))
 	mux.HandleFunc("POST /items", createItemHandler(store))
